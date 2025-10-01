@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "name": "Code Quality Analyzer",
+  "description": "Monitors source code files for changes and analyzes modified code for potential improvements including code smells, design patterns, and best practices. Generates suggestions for improving code quality while maintaining existing functionality, focusing on readability, maintainability, and performance optimizations.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "prisma/**/*.prisma",
+      "scripts/**/*.ts",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.jsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A source code file has been modified. Please analyze the changes for potential improvements including:\n\n1. **Code Smells**: Identify any code smells like long functions, duplicate code, complex conditionals, or inappropriate naming\n2. **Design Patterns**: Suggest appropriate design patterns that could improve the code structure\n3. **Best Practices**: Check adherence to React, Next.js, TypeScript, and general JavaScript best practices\n4. **Performance**: Identify potential performance optimizations including React rendering, database queries, and bundle size\n5. **Maintainability**: Suggest improvements for code readability, modularity, and future extensibility\n6. **Type Safety**: Ensure proper TypeScript usage and suggest stronger typing where applicable\n7. **Security**: Check for potential security issues, especially in API routes and data handling\n\nConsider the project context:\n- Next.js 15 with App Router and React 19\n- TypeScript with strict mode\n- Prisma ORM with PostgreSQL\n- Tailwind CSS for styling\n- Photography business application with client galleries and admin features\n\nProvide specific, actionable suggestions while maintaining the existing functionality. Focus on improvements that align with the project's architecture and coding standards."
+  }
+}

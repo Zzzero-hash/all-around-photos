@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  clientGalleries ClientGallery[]
+  orders          Order[]
+
+  @@map("users")
+}
+
+model Photo {
+  id           String      @id @default(cuid())
+  filename     String
+  title        String?
+  description  String?
+  category     PhotoCategory
+  isPublic     Boolean     @default(false)
+  storageUrl   String
+  thumbnailUrl String
+  watermarkUrl String?
+  price        Float       @default(0)
+  metadata     Json?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  clientGalleries ClientGalleryPhoto[]
+  orderPhotos     OrderPhoto[]
+
+  @@map("photos")
+}
+
+model ClientGallery {
+  id         String    @id @default(cuid())
+  name       String
+  accessCode String    @unique
+  expiresAt  DateTime?
+  isActive   Boolean   @default(true)
+  clientId   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  // Relations
+  client User                   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  photos ClientGalleryPhoto[]
+  orders Order[]
+
+  @@map("client_galleries")
+}
+
+model ClientGalleryPhoto {
+  id        String @id @default(cuid())
+  galleryId String
+  photoId   String
+
+  // Relations
+  gallery ClientGallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  photo   Photo         @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@unique([galleryId, photoId])
+  @@map("client_gallery_photos")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  clientId        String
+  galleryId       String
+  totalAmount     Float
+  status          OrderStatus @default(PENDING)
+  stripePaymentId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  client        User         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  gallery       ClientGallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  photos        OrderPhoto[]
+  downloadLinks DownloadLink[]
+
+  @@map("orders")
+}
+
+model OrderPhoto {
+  id      String @id @default(cuid())
+  orderId String
+  photoId String
+  price   Float
+
+  // Relations
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, photoId])
+  @@map("order_photos")
+}
+
+model DownloadLink {
+  id        String    @id @default(cuid())
+  orderId   String
+  photoId   String
+  url       String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  // Relations
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("download_links")
+}
+
+model Service {
+  id          String          @id @default(cuid())
+  name        String
+  description String
+  category    ServiceCategory
+  basePrice   Float
+  features    String[]
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("services")
+}
+
+// Enums
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum PhotoCategory {
+  COMMERCIAL
+  RESIDENTIAL
+  REAL_ESTATE
+  EVENT
+  OTHER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+}
+
+enum ServiceCategory {
+  INSPECTION
+  PHOTOGRAPHY
+  CINEMATOGRAPHY
+}

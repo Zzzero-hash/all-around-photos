@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+build
+*.lock
+*.log
+.env*
+public/
+coverage/

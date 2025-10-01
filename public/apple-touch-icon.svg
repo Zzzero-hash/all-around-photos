@@ -1,0 +1,33 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="180" height="180" rx="20" fill="#1e40af"/>
+  
+  <!-- Camera body -->
+  <rect x="45" y="70" width="90" height="60" rx="8" fill="#ffffff"/>
+  
+  <!-- Camera lens -->
+  <circle cx="90" cy="100" r="25" fill="#1e40af"/>
+  <circle cx="90" cy="100" r="18" fill="#ffffff"/>
+  <circle cx="90" cy="100" r="12" fill="#1e40af"/>
+  <circle cx="90" cy="100" r="6" fill="#ffffff"/>
+  
+  <!-- Drone propellers -->
+  <circle cx="50" cy="50" r="12" fill="#f97316"/>
+  <circle cx="130" cy="50" r="12" fill="#f97316"/>
+  <circle cx="50" cy="130" r="12" fill="#f97316"/>
+  <circle cx="130" cy="130" r="12" fill="#f97316"/>
+  
+  <!-- Connecting arms -->
+  <line x1="62" y1="62" x2="78" y2="78" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="118" y1="62" x2="102" y2="78" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="62" y1="118" x2="78" y2="102" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="118" y1="118" x2="102" y2="102" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Company text -->
+  <text x="90" y="155" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+    ALL AROUND
+  </text>
+  <text x="90" y="170" text-anchor="middle" fill="#f97316" font-family="Arial, sans-serif" font-size="12" font-weight="bold">
+    PHOTOS
+  </text>
+</svg>
