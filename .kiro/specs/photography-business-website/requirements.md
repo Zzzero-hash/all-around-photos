@@ -2,32 +2,34 @@
 
 ## Introduction
 
-All Around Photos LLC is a drone photography business specializing in commercial and residential property inspections, with additional services including real estate photography, event coverage, and aerial cinematography. The website will serve as a digital storefront to showcase work, attract clients, and facilitate photo purchases while highlighting the company's expertise in drone photography and inspection services.
+All Around Photos LLC is a comprehensive photography business specializing in aerial drone photography, portrait sessions, event photography, and pet photography. The business captures unique perspectives through drone technology while also providing traditional photography services for families, couples, events, and pets. The website will serve as a digital portfolio and booking platform to showcase diverse photography work, attract clients across multiple service categories, and facilitate photo purchases and session bookings.
 
 ## Requirements
 
 ### Requirement 1
 
-**User Story:** As a potential client, I want to view a professional gallery of drone photography work, so that I can assess the quality and style of services before hiring All Around Photos LLC.
+**User Story:** As a potential client, I want to view professional galleries showcasing different photography services, so that I can assess the quality and style across portraits, events, aerial, and pet photography before booking a session.
 
 #### Acceptance Criteria
 
-1. WHEN a user visits the gallery page THEN the system SHALL display high-quality drone photography samples organized by service category
-2. WHEN a user clicks on a photo thumbnail THEN the system SHALL display a full-size image with metadata (location, service type, equipment used)
-3. WHEN a user browses the gallery THEN the system SHALL provide filtering options by service type (commercial inspection, residential inspection, real estate, events)
+1. WHEN a user visits the gallery page THEN the system SHALL display high-quality photography samples organized by service category (Portraits, Events, Aerial Sessions, Pet Sessions)
+2. WHEN a user clicks on a photo thumbnail THEN the system SHALL display a full-size image with session details and photography style information
+3. WHEN a user browses the gallery THEN the system SHALL provide filtering options by service type (portraits, events, aerial, pets)
 4. WHEN a user views gallery images THEN the system SHALL load images efficiently with lazy loading and optimized formats
+5. WHEN a user views aerial photography THEN the system SHALL highlight unique drone perspectives and panoramic capabilities
 
 ### Requirement 2
 
-**User Story:** As a property owner or real estate professional, I want to see detailed service offerings and pricing, so that I can understand what inspection and photography services are available for my needs.
+**User Story:** As a potential client, I want to see detailed service offerings and session packages, so that I can understand what photography services are available and choose the right package for my needs.
 
 #### Acceptance Criteria
 
-1. WHEN a user visits the services page THEN the system SHALL display comprehensive service categories including drone inspections, real estate photography, and aerial cinematography
-2. WHEN a user views a service category THEN the system SHALL show detailed descriptions, typical deliverables, and pricing ranges
-3. WHEN a user views commercial inspection services THEN the system SHALL highlight capabilities for roof inspections, building assessments, and infrastructure monitoring
-4. WHEN a user views residential services THEN the system SHALL showcase home inspections, real estate listings, and property documentation
-5. IF a user wants additional services THEN the system SHALL display other offerings like event photography, construction progress documentation, and agricultural surveys
+1. WHEN a user visits the services page THEN the system SHALL display comprehensive service categories including Portrait Sessions, Event Photography, Aerial Sessions, and Pet Photography
+2. WHEN a user views portrait services THEN the system SHALL show family portrait packages (1-hour at one location, 3-hour at two locations) and couple/individual sessions (30 minutes to 1 hour)
+3. WHEN a user views event photography THEN the system SHALL highlight coverage for birthday parties, graduations, family reunions, and special occasions with drone photography options
+4. WHEN a user views aerial sessions THEN the system SHALL showcase unique drone photography capabilities for panoramic views and aerial perspectives
+5. WHEN a user views pet photography THEN the system SHALL emphasize pet-friendly atmosphere and experience with various animals (cats, dogs, farm animals, reptiles, birds)
+6. IF a user wants pricing information THEN the system SHALL display session packages with duration, location options, and deliverable details
 
 ### Requirement 3
 
@@ -55,24 +57,37 @@ All Around Photos LLC is a drone photography business specializing in commercial
 
 ### Requirement 5
 
-**User Story:** As a potential client, I want to easily request quotes and schedule services, so that I can quickly get pricing and book drone photography or inspection services.
+**User Story:** As a potential client, I want to easily request quotes and schedule photography sessions, so that I can quickly get pricing and book portrait, event, aerial, or pet photography services.
 
 #### Acceptance Criteria
 
-1. WHEN a user wants to request a quote THEN the system SHALL provide a detailed form capturing project type, location, timeline, and specific requirements
-2. WHEN a user submits a quote request THEN the system SHALL send confirmation to the client and notification to the business owner
-3. WHEN a user wants to schedule services THEN the system SHALL integrate with a booking system showing available dates and time slots
-4. WHEN a user books a service THEN the system SHALL send calendar invitations and confirmation details to both parties
-5. IF a user has urgent inspection needs THEN the system SHALL provide emergency contact information and expedited booking options
+1. WHEN a user wants to request a quote THEN the system SHALL provide a detailed form capturing session type, location preferences, timeline, and specific requirements
+2. WHEN a user submits a quote request THEN the system SHALL send confirmation to the client and notification to the photographer
+3. WHEN a user wants to schedule a session THEN the system SHALL integrate with a booking system showing available dates and time slots
+4. WHEN a user books a session THEN the system SHALL send calendar invitations and confirmation details to both parties
+5. IF a user has special requirements THEN the system SHALL provide options for custom packages and additional services
+6. WHEN a user books pet photography THEN the system SHALL include special instructions for pet comfort and session preparation
 
 ### Requirement 6
+
+**User Story:** As a potential client, I want to see testimonials and reviews from previous clients, so that I can build confidence in the photographer's quality and professionalism before booking a session.
+
+#### Acceptance Criteria
+
+1. WHEN a user visits the homepage THEN the system SHALL display client testimonials with names and service types
+2. WHEN a user views testimonials THEN the system SHALL show specific feedback about different photography services (family portraits, aerial shots, event coverage, pet photography)
+3. WHEN a user reads testimonials THEN the system SHALL highlight key value propositions like competitive pricing, attention to detail, and unique aerial perspectives
+4. WHEN a user wants social proof THEN the system SHALL provide links to Facebook page and social media presence
+5. IF available THEN the system SHALL display before/after examples or case studies of photography work
+
+### Requirement 7
 
 **User Story:** As the business owner, I want to manage content and client galleries efficiently, so that I can update portfolios and deliver client photos without technical complexity.
 
 #### Acceptance Criteria
 
-1. WHEN the owner uploads new portfolio images THEN the system SHALL provide an admin interface for categorizing and tagging photos
+1. WHEN the owner uploads new portfolio images THEN the system SHALL provide an admin interface for categorizing and tagging photos by service type
 2. WHEN the owner creates client galleries THEN the system SHALL generate secure access codes and manage client permissions
 3. WHEN the owner updates service information THEN the system SHALL allow easy content management without requiring developer intervention
 4. WHEN the owner reviews orders THEN the system SHALL provide a dashboard showing purchase history, pending downloads, and revenue analytics
-5. IF the owner needs to modify pricing THEN the system SHALL allow flexible pricing updates for different service packages
+5. IF the owner needs to modify pricing THEN the system SHALL allow flexible pricing updates for different session packages

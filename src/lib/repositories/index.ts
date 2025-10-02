@@ -1,11 +1,12 @@
 import { UserRepository } from './user-repository';
-import { PhotoRepository } from './photo-repository';
+import { MockPhotoRepository } from './photo-repository';
 import { ServiceRepository } from './service-repository';
 
-// Export classes
-export { UserRepository, PhotoRepository, ServiceRepository };
+// Export types
+export type { PhotoRepository } from './photo-repository';
+export { UserRepository, ServiceRepository };
 
 // Create singleton instances
 export const userRepository = new UserRepository();
-export const photoRepository = new PhotoRepository();
+export const photoRepository = new MockPhotoRepository();
 export const serviceRepository = new ServiceRepository();

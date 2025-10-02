@@ -51,13 +51,19 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link
               href="/quote"
-              className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              className="text-primary-600 hover:text-primary-700 px-4 py-2 rounded-lg font-medium transition-colors border border-primary-600 hover:bg-primary-50"
             >
               Get Quote
+            </Link>
+            <Link
+              href="/book"
+              className="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              Book Session
             </Link>
           </div>
 
@@ -109,13 +115,20 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
-            <div className="px-4 pt-4 border-t border-neutral-200">
+            <div className="px-4 pt-4 border-t border-neutral-200 space-y-2">
               <Link
                 href="/quote"
                 onClick={() => setIsMenuOpen(false)}
-                className="block w-full text-center bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                className="block w-full text-center border border-primary-600 text-primary-600 hover:bg-primary-50 px-4 py-2 rounded-lg font-medium transition-colors"
               >
                 Get Quote
+              </Link>
+              <Link
+                href="/book"
+                onClick={() => setIsMenuOpen(false)}
+                className="block w-full text-center bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                Book Session
               </Link>
             </div>
           </nav>

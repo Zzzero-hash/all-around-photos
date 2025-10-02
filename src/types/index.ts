@@ -2,7 +2,16 @@
 // For database operations, use types from @/types/database
 
 // Import enums from database types for consistency
-import type { Role, PhotoCategory, OrderStatus, ServiceCategory } from '@prisma/client';
+import type { 
+  Role, 
+  PhotoCategory, 
+  OrderStatus, 
+  ServiceCategory,
+  QuoteStatus,
+  QuoteServiceType,
+  SessionType,
+  BudgetRange
+} from '@prisma/client';
 
 export interface User {
   id: string;
@@ -76,12 +85,12 @@ export interface Service {
   isActive: boolean;
 }
 
-// Quote request status enum
-export enum QuoteStatus {
-  NEW = 'NEW',
-  REVIEWED = 'REVIEWED',
-  QUOTED = 'QUOTED',
-  CLOSED = 'CLOSED'
+export interface ServicePackage {
+  name: string;
+  duration: string;
+  locations: number;
+  price: string;
+  deliverables: string;
 }
 
 export interface QuoteRequest {
@@ -89,13 +98,38 @@ export interface QuoteRequest {
   name: string;
   email: string;
   phone?: string;
-  serviceType: string;
+  serviceType: QuoteServiceType;
+  sessionType?: SessionType;
   projectDescription: string;
   location: string;
+  preferredDate?: Date;
+  alternateDate?: Date;
   timeline: string;
-  budget?: string;
-  createdAt: Date;
+  budget?: BudgetRange;
+  specialRequirements?: string;
+  petDetails?: string;
   status: QuoteStatus;
+  adminNotes?: string;
+  quotedAmount?: number; // Will be converted from Decimal in API layer
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Form-specific types for quote requests
+export interface QuoteRequestFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  serviceType: QuoteServiceType;
+  sessionType?: SessionType;
+  projectDescription: string;
+  location: string;
+  preferredDate?: string; // ISO string for form inputs
+  alternateDate?: string; // ISO string for form inputs
+  timeline: string;
+  budget?: BudgetRange;
+  specialRequirements?: string;
+  petDetails?: string;
 }
 
 // Component prop types

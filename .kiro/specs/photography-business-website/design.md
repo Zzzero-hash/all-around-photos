@@ -2,7 +2,7 @@
 
 ## Overview
 
-The All Around Photos LLC website will be built as a modern, responsive web application using Next.js 15 with the App Router, React 19, and Tailwind CSS. The design prioritizes visual impact through high-quality imagery, professional presentation, and seamless user experience across all devices. The architecture supports both public-facing marketing content and secure client galleries with e-commerce functionality.
+The All Around Photos LLC website will be built as a modern, responsive web application using Next.js 15 with the App Router, React 19, and Tailwind CSS. The design prioritizes visual storytelling through high-quality photography across multiple service categories (portraits, events, aerial, pets), professional presentation, and seamless booking experience. The architecture supports both public-facing portfolio content and secure client galleries with e-commerce functionality for photo purchases.
 
 ## Architecture
 
@@ -51,17 +51,18 @@ graph TB
 
 #### 2. Gallery Components
 
-- **PublicGallery**: Masonry-style grid with category filtering
-- **ImageModal**: Full-screen image viewer with metadata
-- **CategoryFilter**: Service type filtering (commercial, residential, events)
-- **ClientGallery**: Protected gallery with purchase options
+- **PublicGallery**: Masonry-style grid with category filtering for different photography services
+- **ImageModal**: Full-screen image viewer with session details and photography information
+- **CategoryFilter**: Service type filtering (portraits, events, aerial sessions, pet photography)
+- **ClientGallery**: Protected gallery with purchase options for session photos
 
 #### 3. Service Components
 
-- **ServiceCard**: Individual service presentation with pricing
-- **ServiceDetail**: Expanded service information
-- **QuoteForm**: Multi-step form for service requests
-- **BookingCalendar**: Available date/time selection
+- **ServiceCard**: Individual photography service presentation with session packages and pricing
+- **ServiceDetail**: Expanded service information with session duration and deliverables
+- **QuoteForm**: Multi-step form for photography session requests
+- **BookingCalendar**: Available date/time selection for different session types
+- **TestimonialSection**: Client reviews and feedback display
 
 #### 4. E-commerce Components
 
@@ -118,7 +119,7 @@ interface Photo {
   filename: string;
   title?: string;
   description?: string;
-  category: 'COMMERCIAL' | 'RESIDENTIAL' | 'REAL_ESTATE' | 'EVENT' | 'OTHER';
+  category: 'PORTRAIT' | 'EVENT' | 'AERIAL' | 'PET' | 'OTHER';
   isPublic: boolean;
   metadata: PhotoMetadata;
   storageUrl: string;
@@ -169,10 +170,26 @@ interface Service {
   id: string;
   name: string;
   description: string;
-  category: 'INSPECTION' | 'PHOTOGRAPHY' | 'CINEMATOGRAPHY';
+  category: 'PORTRAIT' | 'EVENT' | 'AERIAL' | 'PET';
+  sessionDuration: string; // e.g., "1 hour", "30 minutes", "3 hours"
+  locationCount: number; // number of locations included
   basePrice: number;
   features: string[];
   isActive: boolean;
+}
+```
+
+#### Testimonial Model
+
+```typescript
+interface Testimonial {
+  id: string;
+  clientName: string;
+  serviceType: string;
+  content: string;
+  rating?: number;
+  isActive: boolean;
+  createdAt: Date;
 }
 ```
 
@@ -206,11 +223,12 @@ interface Service {
 
 #### Homepage
 
-- Hero section with drone video background
-- Featured work carousel
-- Service overview cards
-- Client testimonials
-- Contact call-to-action
+- Hero section with photography showcase and compelling tagline
+- Featured work carousel highlighting different photography services
+- Service overview cards (Portraits, Events, Aerial Sessions, Pet Sessions)
+- Client testimonials with names and service feedback
+- Facebook group integration and social proof
+- Contact call-to-action for bookings
 
 #### Gallery Page
 
@@ -222,11 +240,12 @@ interface Service {
 
 #### Services Page
 
-- Service category sections
-- Detailed service cards with pricing
-- Quote request forms
-- FAQ section
-- Certification displays
+- Service category sections (Portraits, Events, Aerial Sessions, Pet Sessions)
+- Detailed service cards with session duration, location options, and pricing
+- Package comparisons (e.g., 1-hour vs 3-hour family sessions)
+- Quote request forms for custom sessions
+- Pet photography special considerations and preparation tips
+- Aerial photography capabilities and unique perspectives showcase
 
 #### Client Gallery
 

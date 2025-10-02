@@ -1,5 +1,14 @@
 import { z } from 'zod';
-import { Role, PhotoCategory, OrderStatus, ServiceCategory } from '@prisma/client';
+import { 
+  Role, 
+  PhotoCategory, 
+  OrderStatus, 
+  ServiceCategory,
+  QuoteStatus,
+  QuoteServiceType,
+  SessionType,
+  BudgetRange
+} from '@prisma/client';
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -112,6 +121,61 @@ export const serviceFilterSchema = z.object({
   search: z.string().max(100).optional()
 }).merge(paginationSchema);
 
+// Quote Request validation schemas
+export const createQuoteRequestSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().regex(/^[\+]?[1-9][\d]{0,15}$/, 'Invalid phone number format').optional().or(z.literal('')),
+  serviceType: z.nativeEnum(QuoteServiceType, { 
+    errorMap: () => ({ message: 'Please select a valid service type' })
+  }),
+  sessionType: z.nativeEnum(SessionType).optional(),
+  projectDescription: z.string()
+    .min(10, 'Please provide more details about your project')
+    .max(2000, 'Description too long'),
+  location: z.string().min(1, 'Location is required').max(255, 'Location too long'),
+  preferredDate: z.date().min(new Date(), 'Preferred date must be in the future').optional(),
+  alternateDate: z.date().min(new Date(), 'Alternate date must be in the future').optional(),
+  timeline: z.string().min(1, 'Timeline is required').max(100, 'Timeline too long'),
+  budget: z.nativeEnum(BudgetRange).optional(),
+  specialRequirements: z.string().max(1000, 'Special requirements too long').optional(),
+  petDetails: z.string().max(500, 'Pet details too long').optional()
+}).refine((data) => {
+  // If pet photography is selected, pet details should be provided
+  if (data.sessionType === SessionType.PET_PHOTOGRAPHY && !data.petDetails) {
+    return false;
+  }
+  return true;
+}, {
+  message: 'Pet details are required for pet photography sessions',
+  path: ['petDetails']
+});
+
+export const updateQuoteRequestSchema = z.object({
+  status: z.nativeEnum(QuoteStatus).optional(),
+  adminNotes: z.string().max(2000, 'Admin notes too long').optional(),
+  quotedAmount: z.number().min(0, 'Quoted amount cannot be negative').optional()
+});
+
+// Form-specific schema for client-side validation (with string dates)
+export const quoteRequestFormSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().regex(/^[\+]?[1-9][\d]{0,15}$/, 'Invalid phone number format').optional().or(z.literal('')),
+  serviceType: z.nativeEnum(QuoteServiceType),
+  sessionType: z.nativeEnum(SessionType).optional(),
+  projectDescription: z.string()
+    .min(10, 'Please provide more details about your project')
+    .max(2000, 'Description too long'),
+  location: z.string().min(1, 'Location is required').max(255, 'Location too long'),
+  preferredDate: z.string().optional(), // ISO string for form inputs
+  alternateDate: z.string().optional(), // ISO string for form inputs
+  timeline: z.string().min(1, 'Timeline is required').max(100, 'Timeline too long'),
+  budget: z.nativeEnum(BudgetRange).optional(),
+  specialRequirements: z.string().max(1000, 'Special requirements too long').optional(),
+  petDetails: z.string().max(500, 'Pet details too long').optional()
+});
+
 // Type exports for use in API routes
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
@@ -124,5 +188,8 @@ export type UpdateOrderStatusInput = z.infer<typeof updateOrderStatusSchema>;
 export type CreateServiceInput = z.infer<typeof createServiceSchema>;
 export type UpdateServiceInput = z.infer<typeof updateServiceSchema>;
 export type CreateDownloadLinkInput = z.infer<typeof createDownloadLinkSchema>;
+export type CreateQuoteRequestInput = z.infer<typeof createQuoteRequestSchema>;
+export type UpdateQuoteRequestInput = z.infer<typeof updateQuoteRequestSchema>;
+export type QuoteRequestFormInput = z.infer<typeof quoteRequestFormSchema>;
 export type PhotoFilterInput = z.infer<typeof photoFilterSchema>;
 export type ServiceFilterInput = z.infer<typeof serviceFilterSchema>;
