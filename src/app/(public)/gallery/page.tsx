@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-gallery.jpg',
+        url: '/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'All Around Photos LLC Gallery',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Professional Drone Photography Gallery',
     description: 'Explore our portfolio of aerial photography and commercial inspections.',
-    images: ['/og-gallery.jpg'],
+    images: ['/og-image.svg'],
   },
 };
 

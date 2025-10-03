@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
@@ -54,11 +54,7 @@ export default function QuoteRequestsPage() {
     totalPages: 0
   });
 
-  useEffect(() => {
-    fetchQuoteRequests();
-  }, [filters]);
-
-  const fetchQuoteRequests = async () => {
+  const fetchQuoteRequests = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -69,6 +65,11 @@ export default function QuoteRequestsPage() {
       params.append('page', filters.page.toString());
 
       const response = await fetch(`/api/quote-requests?${params}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const result: QuoteRequestsResponse = await response.json();
 
       if (!result.success) {
@@ -82,29 +83,37 @@ export default function QuoteRequestsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
-  const handleFilterChange = (field: keyof typeof filters, value: string | number) => {
+  useEffect(() => {
+    fetchQuoteRequests();
+  }, [fetchQuoteRequests, filters]);
+
+  useEffect(() => {
+    fetchQuoteRequests();
+  }, [fetchQuoteRequests]);
+
+  const handleFilterChange = useCallback((field: keyof typeof filters, value: string | number) => {
     setFilters(prev => ({
       ...prev,
       [field]: value,
-      page: field !== 'page' ? 1 : (typeof value === 'number' ? value : parseInt(value.toString())) // Reset to page 1 when changing filters
+      page: field !== 'page' ? 1 : (typeof value === 'number' ? value : parseInt(value.toString()))
     }));
-  };
+  }, []);
 
-  const getStatusBadgeColor = (status: string) => {
-    switch (status) {
-      case 'NEW': return 'bg-blue-100 text-blue-800';
-      case 'REVIEWED': return 'bg-yellow-100 text-yellow-800';
-      case 'QUOTED': return 'bg-purple-100 text-purple-800';
-      case 'ACCEPTED': return 'bg-green-100 text-green-800';
-      case 'DECLINED': return 'bg-red-100 text-red-800';
-      case 'CLOSED': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  const getStatusBadgeColor = useCallback((status: string) => {
+    const statusColors: Record<string, string> = {
+      'NEW': 'bg-blue-100 text-blue-800',
+      'REVIEWED': 'bg-yellow-100 text-yellow-800',
+      'QUOTED': 'bg-purple-100 text-purple-800',
+      'ACCEPTED': 'bg-green-100 text-green-800',
+      'DECLINED': 'bg-red-100 text-red-800',
+      'CLOSED': 'bg-gray-100 text-gray-800'
+    };
+    return statusColors[status] || 'bg-gray-100 text-gray-800';
+  }, []);
 
-  const formatDate = (dateString: string) => {
+  const formatDate = useCallback((dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -112,7 +121,7 @@ export default function QuoteRequestsPage() {
       hour: '2-digit',
       minute: '2-digit'
     });
-  };
+  }, []);
 
   if (loading && quoteRequests.length === 0) {
     return (

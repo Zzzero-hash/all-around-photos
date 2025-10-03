@@ -3,7 +3,8 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { X, Download, Calendar, Tag, MapPin } from 'lucide-react';
-import { Photo } from '@prisma/client';
+import { Photo } from '@/types/database';
+import { getImageUrl } from '@/lib/image-utils';
 
 interface ImageModalProps {
   photo: Photo;
@@ -186,7 +187,7 @@ export function ImageModal({
           <div className="flex-1 relative bg-neutral-100">
             <div className="relative aspect-video lg:aspect-auto lg:h-[70vh]">
               <Image
-                src={photo.storageUrl}
+                src={getImageUrl(photo)}
                 alt={photo.title || photo.filename}
                 fill
                 className="object-contain"

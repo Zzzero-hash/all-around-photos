@@ -10,6 +10,28 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    dangerouslyAllowSVG: true,
+    unoptimized: false,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/gallery/:slug',
+        destination: '/api/gallery/:slug',
+      },
+      {
+        source: '/hero/:slug',
+        destination: '/api/hero/:slug',
+      },
+      {
+        source: '/services/:slug',
+        destination: '/api/services/:slug',
+      },
+      {
+        source: '/testimonials/:slug',
+        destination: '/api/testimonials/:slug',
+      },
+    ];
   },
 };
 

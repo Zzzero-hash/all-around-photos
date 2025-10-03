@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Photo } from '@prisma/client';
+import { Photo } from '@/types/database';
 import { cn } from '@/lib/utils';
 import { mockPhotos } from '@/lib/mock-data';
+import { getImageUrl } from '@/lib/image-utils';
 
 interface InspectionImageModalProps {
   photo: Photo;
@@ -216,14 +217,14 @@ export function InspectionImageModal({
                   <div className="absolute top-2 left-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
                     BEFORE
                   </div>
-                  <Image
-                    src={beforeAfter?.type === 'before' ? photo.storageUrl : relatedPhoto.storageUrl}
-                    alt="Before inspection"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
-                    priority
-                  />
+                <Image
+                  src={beforeAfter?.type === 'before' ? getImageUrl(photo) : getImageUrl(relatedPhoto)}
+                  alt="Before inspection"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                  priority
+                />
                 </div>
                 
                 {/* After Image */}
@@ -232,7 +233,7 @@ export function InspectionImageModal({
                     AFTER
                   </div>
                   <Image
-                    src={beforeAfter?.type === 'after' ? photo.storageUrl : relatedPhoto.storageUrl}
+                    src={beforeAfter?.type === 'after' ? getImageUrl(photo) : getImageUrl(relatedPhoto)}
                     alt="After inspection"
                     width={800}
                     height={600}
@@ -243,7 +244,7 @@ export function InspectionImageModal({
               </div>
             ) : (
               <Image
-                src={photo.storageUrl}
+                src={getImageUrl(photo)}
                 alt={photo.title || photo.filename}
                 width={1200}
                 height={800}

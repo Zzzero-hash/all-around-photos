@@ -2,11 +2,12 @@
 
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
-import { Photo } from '@prisma/client';
+import { Photo } from '@/types/database';
 import { ImageModal } from './ImageModal';
 import { InspectionPhotoCard } from './InspectionPhotoCard';
 import { InspectionImageModal } from './InspectionImageModal';
 import { cn } from '@/lib/utils';
+import { getImageUrl, getThumbnailUrl } from '@/lib/image-utils';
 
 interface PhotoGridProps {
   photos: Photo[];
@@ -129,7 +130,7 @@ function PhotoCard({ photo, onClick }: PhotoCardProps) {
       <div className="relative overflow-hidden rounded-lg bg-neutral-200 shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
         {!imageError ? (
           <Image
-            src={photo.thumbnailUrl || photo.storageUrl}
+            src={getThumbnailUrl(photo)}
             alt={photo.title || photo.filename}
             width={400}
             height={300}
